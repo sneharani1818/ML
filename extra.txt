@@ -1,0 +1,199 @@
+NAIVE BAYES::::::::::::::::::::::::::::::::::
+#Importing the libraries  
+import numpy as nm  
+import matplotlib.pyplot as mtp  
+import pandas as pd  
+  
+# Importing the dataset  
+dataset = pd.read_csv('user_data.csv')  
+x = dataset.iloc[:, [2, 3]].values  
+y = dataset.iloc[:, 4].values  
+  
+# Splitting the dataset into the Training set and Test set  
+from sklearn.model_selection import train_test_split  
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.25, random_state = 0)  
+  
+# Feature Scaling  
+from sklearn.preprocessing import StandardScaler  
+sc = StandardScaler()  
+x_train = sc.fit_transform(x_train)  
+x_test = sc.transform(x_test)  
+
+# Fitting Naive Bayes to the Training set  
+from sklearn.naive_bayes import GaussianNB  
+classifier = GaussianNB()  
+classifier.fit(x_train, y_train)  
+
+# Predicting the Test set results  
+y_pred = classifier.predict(x_test) 
+
+# Making the Confusion Matrix  
+from sklearn.metrics import confusion_matrix  
+cm = confusion_matrix(y_test, y_pred)
+
+# Visualising the Training set results  
+from matplotlib.colors import ListedColormap  
+x_set, y_set = x_train, y_train  
+X1, X2 = nm.meshgrid(nm.arange(start = x_set[:, 0].min() - 1, stop = x_set[:, 0].max() + 1, step = 0.01),  
+                     nm.arange(start = x_set[:, 1].min() - 1, stop = x_set[:, 1].max() + 1, step = 0.01))  
+mtp.contourf(X1, X2, classifier.predict(nm.array([X1.ravel(), X2.ravel()]).T).reshape(X1.shape),  
+             alpha = 0.75, cmap = ListedColormap(('purple', 'green')))  
+mtp.xlim(X1.min(), X1.max())  
+mtp.ylim(X2.min(), X2.max())  
+for i, j in enumerate(nm.unique(y_set)):  
+    mtp.scatter(x_set[y_set == j, 0], x_set[y_set == j, 1],  
+                c = ListedColormap(('purple', 'green'))(i), label = j)  
+mtp.title('Naive Bayes (Training set)')  
+mtp.xlabel('Age')  
+mtp.ylabel('Estimated Salary')  
+mtp.legend()  
+mtp.show() 
+
+# Visualising the Test set results  
+from matplotlib.colors import ListedColormap  
+x_set, y_set = x_test, y_test  
+X1, X2 = nm.meshgrid(nm.arange(start = x_set[:, 0].min() - 1, stop = x_set[:, 0].max() + 1, step = 0.01),  
+                     nm.arange(start = x_set[:, 1].min() - 1, stop = x_set[:, 1].max() + 1, step = 0.01))  
+mtp.contourf(X1, X2, classifier.predict(nm.array([X1.ravel(), X2.ravel()]).T).reshape(X1.shape),  
+             alpha = 0.75, cmap = ListedColormap(('purple', 'green')))  
+mtp.xlim(X1.min(), X1.max())  
+mtp.ylim(X2.min(), X2.max())  
+for i, j in enumerate(nm.unique(y_set)):  
+    mtp.scatter(x_set[y_set == j, 0], x_set[y_set == j, 1],  
+                c = ListedColormap(('purple', 'green'))(i), label = j)  
+mtp.title('Naive Bayes (test set)')  
+mtp.xlabel('Age')  
+mtp.ylabel('Estimated Salary')  
+mtp.legend()  
+mtp.show()  
+
+----------------------------------------------------------------------------------------------------------------------
+NORMAL EQUATION METHOD::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+# This code may not run on GFG IDE
+# as required modules not found.
+  
+# import required modules
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.datasets import make_regression
+  
+# Create data set.
+x, y = make_regression(n_samples=100, n_features=1,
+                       n_informative=1, noise=10, random_state=10)
+  
+# Plot the generated data set.
+plt.scatter(x, y, s=30, marker='o')
+plt.xlabel("Feature_1 --->")
+plt.ylabel("Target_Variable --->")
+plt.title('Simple Linear Regression')
+plt.show()
+  
+# Convert  target variable array from 1d to 2d.
+y = y.reshape(100, 1)
+*********************************************************************
+# code
+  
+# Adding x0=1 to each instance
+x_new = np.array([np.ones(len(x)), x.flatten()]).T
+  
+# Using Normal Equation.
+theta_best_values = np.linalg.inv(x_new.T.dot(x_new)).dot(x_new.T).dot(y)
+  
+# Display best values obtained.
+print(theta_best_values)
+**********************************************************************
+# sample data instance.
+x_sample = np.array([[-2], [4]])
+  
+# Adding x0=1 to each instance.
+x_sample_new = np.array([np.ones(len(x_sample)), x_sample.flatten()]).T
+  
+# Display the sample.
+print("Before adding x0:\n", x_sample)
+print("After adding x0:\n", x_sample_new)
+*********************************************************************
+# code
+# predict the values for given data instance.
+predict_value=x_sample_new.dot(theta_best_values)
+print(predict_value)
+*****************************************************************
+# code
+  
+# Plot the output.
+plt.scatter(x,y,s=30,marker='o')
+plt.plot(x_sample,predict_value,c='red')
+plt.plot()
+plt.xlabel("Feature_1 --->")
+plt.ylabel("Target_Variable --->")
+plt.title('Simple Linear Regression')
+plt.show()
+********************************************************************
+# code
+  
+# Verification.
+from sklearn.linear_model import LinearRegression
+lr=LinearRegression()    # Object.
+lr.fit(x,y)              # fit method.
+  
+# Print obtained theta values.
+print("Best value of theta:",lr.intercept_,lr.coef_,sep='\n')
+  
+#predict.
+print("predicted value:",lr.predict(x_sample),sep='\n')
+
+
+---------------------------------------------------------------------------------------------------------------------
+ANALYTICAL METHOD::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------
+GRADIENT DESCENT IMPLEMENTATION::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+from numpy import *
+
+# y = mx + b
+# m is slope, b is y-intercept
+def compute_error_for_line_given_points(b, m, points):
+    totalError = 0
+    for i in range(0, len(points)):
+        x = points[i, 0]
+        y = points[i, 1]
+        totalError += (y - (m * x + b)) ** 2
+    return totalError / float(len(points))
+
+def step_gradient(b_current, m_current, points, learningRate):
+    b_gradient = 0
+    m_gradient = 0
+    N = float(len(points))
+    for i in range(0, len(points)):
+        x = points[i, 0]
+        y = points[i, 1]
+        b_gradient += -(2/N) * (y - ((m_current * x) + b_current))
+        m_gradient += -(2/N) * x * (y - ((m_current * x) + b_current))
+    new_b = b_current - (learningRate * b_gradient)
+    new_m = m_current - (learningRate * m_gradient)
+    return [new_b, new_m]
+
+def gradient_descent_runner(points, starting_b, starting_m, learning_rate, num_iterations):
+    b = starting_b
+    m = starting_m
+    for i in range(num_iterations):
+        b, m = step_gradient(b, m, array(points), learning_rate)
+    return [b, m]
+
+def run():
+    points = genfromtxt("data.csv", delimiter=",")
+    learning_rate = 0.0001
+    initial_b = 0 # initial y-intercept guess
+    initial_m = 0 # initial slope guess
+    num_iterations = 1000
+    print "Starting gradient descent at b = {0}, m = {1}, error = {2}".format(initial_b, initial_m, compute_error_for_line_given_points(initial_b, initial_m, points))
+    print "Running..."
+    [b, m] = gradient_descent_runner(points, initial_b, initial_m, learning_rate, num_iterations)
+    print "After {0} iterations b = {1}, m = {2}, error = {3}".format(num_iterations, b, m, compute_error_for_line_given_points(b, m, points))
+
+if __name__ == '__main__':
+    run()
