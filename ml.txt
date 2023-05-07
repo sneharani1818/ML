@@ -1,0 +1,618 @@
+1.Perform elementary mathematical operations in Octave/MATLAB/R like addition, multiplication, division and exponentiation.
+n1=int(input("ENTER THE FIRST NUMBER: "))
+n2=int(input("ENTER THE SECOND NUMBER: "))
+print("SELECT ANY ONE OPTION:\n\t1. ADDITION\n\t2. SUBTRACTION\n\t3. MULTIPLICATION\n\t4. DIVISION\n\t5. EXPONENTIATION")
+option='y'
+while(option=='y' or option=='Y'):
+    choice=int(input("ENTER YOUR CHOICE:"))
+    if choice==1:
+        s=n1+n2
+        print("Addition:",s)
+    elif choice==2:
+        d=n1-n2
+        print("Subtraction:",d)
+    elif choice==3:
+        m=n1*n2
+        print("Multiplication:",m)
+    elif choice==4:
+        div=n1/n2
+        print("Division:",div)
+    elif choice==5:
+        e=n1**n2
+        print("Exponentiation:",e)
+    else:
+        print("WRONG CHOICE")
+    
+    print("DO YOU WANT TO CONTINUE? ('Y/N')")
+    option=input()
+print("END")
+
+
+
+
+----------------------------------------------------------------------------------------------------
+2.Perform elementary logical operations in Octave/MATLAB/R (like OR, AND, Checking for Equality, NOT, XOR).
+X=True
+Y=False
+print("X AND Y is: ", X and Y)
+print("X OR Y is: ", X or Y)
+print("NOT X is: ", not X)
+print("NOT Y is: ", not Y)
+print("X XOR y is: ", X ^ Y)
+print("X == Y is: ", X==Y)
+
+
+
+-----------------------------------------------------------------------------------------------------
+3.Create, initialize and display simple variables and simple strings and use simple formatting for variable.
+x=45
+y=25
+s="Hello"
+z=x+y
+print(z)
+print(s)
+print(s+" World")
+
+
+----------------------------------------------------------------------------------------------------------
+4.Create/Define single dimension / multi-dimension arrays, and arrays with specific values like array of all ones, all zeros, array with random values within a range, or a diagonal matrix.
+import numpy as np
+m=np.array([1,2,3])
+print("Matrix 1: ", m)
+
+n=np.array([[4,5,6],[1,3,7]])
+print("Matrix 2:\n", n,'\n')
+
+b=np.ones((2,3)).astype('int32')
+print("Ones Matrix:\n", b,'\n')
+
+a=np.zeros((2,2)).astype('int32')
+print("Zeroes Matrix:\n", a,'\n')
+
+c=np.random.randint(1,7,size=(3,3))
+print("Random Value Matrix:\n", c,'\n')
+
+d=np.diag([1,2,3,4])
+print("Diagonal Matrix:\n",d)
+
+
+-----------------------------------------------------------------------------------------------------------
+5.Use command to compute the size of a matrix, size/length of a particular row/column, load data from a text file, store matrix data to a text file, finding out variables and their features in the current scope.
+import numpy as np
+
+x=np.array([[1,2,3,4],[5,6,7,8]])
+print("SHAPE: ", x.shape,'\n')
+print("SIZE: ", x.size,'\n')
+print("ITEM SIZE: ", x.itemsize,'\n')
+
+file=np.random.randint(1,20,size=(3,3))
+np.savetxt('data1.txt',file)
+np.genfromtxt('data1.txt',delimiter=' ')
+file=file.astype('int32')
+print("MATRIX:\n", file)
+
+
+-------------------------------------------------------------------------------------------------------------
+6.Perform basic operations on matrices (like addition, subtraction, multiplication) and display specific rows or columns of the matrix.
+import numpy as np
+
+a=np.array([[1,2,3],[4,5,6]])
+b=np.array([[4,5,6],[7,8,9]])
+
+s=a+b
+print("Matrix after ADDITION:\n", s,'\n')
+print("3rd Column of Sum Matrix:\n", s[:,2],'\n')
+
+d=b-a
+print("Matrix after SUBTRACTION:\n", d,'\n')
+print("2nd Row of Difference Matrix:\n", d[1,:],'\n')
+
+m=a*b
+print("Matrix after MULTIPLICATION:\n", m,'\n')
+print("M[1,2]: ", m[1,2],'\n')
+
+
+----------------------------------------------------------------------------------------------------------
+7.Perform other matrix operations like converting matrix data to absolute values, taking the negative of matrix values, adding/ removing rows/columns from a matrix, finding the maximum or minimum values in a matrix or in a row/column, and finding the sum of some/all elements in a matrix.
+import numpy as np
+
+c=np.array([[1,2,4],[5,6,8]])
+print("MATRIX:\n", c, '\n')
+
+v=np.sin(c)
+print("SINE MATRIX:\n", v,'\n')
+print("ABSOLUTE MATRIX:\n", np.abs(v),'\n')
+
+d=np.append(c,np.array([[9,10,12]]), axis=0)
+print("APPENDED MATRIX:\n", d,'\n')
+
+print("2nd ROW DELETED:\n", np.delete(d,1,0),'\n')
+print("2nd COLUMN DELETED:\n", np.delete(d,1,1),'\n')
+
+print("MAX. ELEMENT OF THE MATRIX:", np.max(d),'\n')
+print("MAX. ELEMENT OF THE MATRIX:", np.min(d),'\n')
+print("SUM OF ALL THE ELEMENTS OF THE MATRIX:",np.sum(d),'\n')
+print("COLUMN-WISE SUM OF ELEMENTS\n", np.sum(d,axis=0))
+
+
+------------------------------------------------------------------------------------------------------------
+8.Create various type of plots/charts like histograms, plot based on sine/cosine function based on data from a matrix. Further label different axes in a plot and data in a plot.
+import matplotlib.pyplot as plt
+import numpy as np
+
+# x-coordinates of left sides of bars
+left = [1, 2, 3, 4, 5]
+# heights of bars
+height = [10, 24, 36, 40, 5]
+# labels for bars
+tick_label = ['one', 'two', 'three', 'four', 'five']
+
+# plotting a bar chart
+plt.bar(left, height, tick_label = tick_label, width = 0.8, color = ['blue', 'pink','green','yellow','red'])
+
+# naming the x-axis
+plt.xlabel('x - axis')
+# naming the y-axis
+plt.ylabel('y - axis')
+# plot title
+plt.title('My bar chart!')
+# function to show the plot
+plt.show()
+**************************************************************
+# defining labels
+activities = ['eat', 'sleep', 'work', 'play']
+# portion covered by each label
+slices = [3, 7, 8, 6]
+# color for each label
+colors = ['red', 'pink', 'green', 'orange']
+
+# plotting the pie chart
+plt.pie(slices, labels = activities, colors=colors, startangle=90, radius = 1.2, autopct = '%1.1f%%')
+
+# plotting legend
+plt.legend()
+# showing the plot
+plt.show()
+*************************************************************
+x = np.arange(0,4*np.pi,0.1)   # start,stop,step
+y = np.sin(x)
+z = np.cos(x)
+plt.plot(x,y,x,z)
+# naming the x-axis
+plt.xlabel('x - axis')
+# naming the y-axis
+plt.ylabel('y - axis')
+# plot title
+plt.title('My Sine-Cosine Graph')
+plt.show()
+
+
+--------------------------------------------------------------------------------------------------------------
+9.Generate different subplots from a given plot and color plot data.
+import matplotlib.pyplot as plt
+import numpy as np
+
+x = np.linspace(0, 2 * np.pi, 400)
+y = np.sin(x ** 2)
+
+fig, axs = plt.subplots(2, 2)
+axs[0, 0].plot(x, y)
+axs[0, 1].plot(x, y, 'tab:orange')
+axs[1, 0].plot(x, -y, 'tab:green')
+axs[1, 1].plot(x, -y, 'tab:red')
+
+----------------------------------------------------------------------------------------------------------------
+10.Use conditional statements and different type of loops based on simple example/s.
+s=input("Enter a String: ")
+s1=""
+for i in s:
+    s1=i+s1
+if(s1==s):
+    print(s, "is Palindrome")
+else:
+    print(s, "is not Palindrome")
+
+------------------------------------------------------------------------------------------------------
+11.Perform vectorized implementation of simple matrix operation like finding the transpose of a matrix, adding, subtracting or multiplying two matrices.
+import numpy as np
+a=np.array([[1,2,3],[4,5,6],[1,1,1]])
+b=np.array([[6,7,8],[9,10,11],[2,2,2]])
+print("MATRIX 1:\n", a,'\n')
+print("MATRIX 2:\n", b,'\n')
+print("TRANSPOSE OF MATRIX 1:\n", np.transpose(a),'\n')
+print("M1+M2:\n", a+b,'\n')
+print("M1-M2:\n", b-a,'\n')
+print("M1*M2:\n", np.matmul(a,b),'\n')
+
+
+--------------------------------------------------------------------------------------------------------
+12.Implement Linear Regression problem. For example, based on the “Advertising” dataset comprising of budget of TV, Radio etc. and the sales data, predict the estimated sales for TV budget.
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+%matplotlib inline
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+from sklearn import metrics
+
+adv = pd.read_csv("Advertising.csv")
+adv.head()
+*********************************************************************
+#check for nulls in the data
+adv.isnull().sum() 
+plt.figure(figsize=(16, 8))
+plt.scatter(adv['TV'], adv['sales'])
+plt.xlabel("TV ")
+plt.ylabel("Sales ")
+plt.show()
+*********************************************************************
+x = adv['TV'].values.reshape(-1,1)
+y = adv['sales'].values.reshape(-1,1)
+
+# split data into train and test
+x_train, x_test, y_train, y_test = train_test_split(x,y,test_size=0.3,random_state=0)
+
+#fit the model using Linear Regression
+linreg = LinearRegression()
+linreg.fit(x_train, y_train)
+
+
+print("INTERCEPT: ", linreg.intercept_[0])          #Intercept
+print("\nCOEFFICIENT: ", linreg.coef_[0][0])          #Coefficient
+print("\nThe linear model is: y = {:.5} + {:.5}TV".format(linreg.intercept_[0], linreg.coef_[0][0]))
+
+# Make predictions using the testing set
+y_pred = linreg.predict(x_test)
+y=linreg.predict(np.array([1000]).reshape(1,-1))         #Prediction
+print("\nPredicted Value for the SALES of TV: ", y)
+
+
+#Accuracy Score
+print("\nAccuracy Score: ", linreg.score(x_test,y_test))
+print('Mean Squared Error :', metrics.mean_squared_error(y_test,y_pred))
+print('Root Mean Squared Error :', np.sqrt(metrics.mean_squared_error(y_test,y_pred)))
+****************************************************************************
+print('Train Score :', linreg.score(x_train,y_train))
+print('Test Score:', linreg.score(x_test,y_test))
+****************************************************************************
+plt.figure(figsize=(16, 8))
+plt.scatter(x_test, y_test, color="red")
+plt.plot(x_test, y_pred, color="black", linewidth=3)
+plt.xticks(())
+plt.yticks(())
+plt.show()
+****************************************************************************
+errors = list()
+for i in range(len(y_test)):
+    # calculate error
+    err = (y_test[i] - y_pred[i])**2
+    # store error
+    errors.append(err)
+    
+# plot errors
+plt.plot(errors)
+plt.xticks(ticks=[i for i in range(len(errors))], labels=y_pred)
+plt.xlabel('Predicted Value')
+plt.ylabel('Mean Squared Error')
+plt.show()
+
+
+--------------------------------------------------------------------------------------------------------------------
+13.Based on multiple features/variables perform Linear Regression on “Advertising” dataset. For example, based on the budget of TV, Radio and Newspaper, predict the overall sales.
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+%matplotlib inline
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+from sklearn import metrics
+
+adv = pd.read_csv("Advertising.csv")
+adv.head()
+********************************************************************************
+x = adv.drop(['sales', 'Unnamed: 0'], axis=1)
+y = adv['sales'].values.reshape(-1,1)
+
+# split data into train and test
+x_train, x_test, y_train, y_test = train_test_split(x,y,test_size=0.3,random_state=0)
+
+#fit the model using Linear Regression
+linreg = LinearRegression()
+linreg.fit(x_train, y_train)
+
+print("INTERCEPT: ", linreg.intercept_[0])          #Intercept
+print("\nCOEFFICIENT: ", linreg.coef_)          #Coefficient
+print("The linear model is: Y = {:.5} + {:.5}*TV + {:.5}*radio + {:.5}*newspaper".format(linreg.intercept_[0], linreg.coef_[0][0], linreg.coef_[0][1], linreg.coef_[0][2]))
+
+# Make predictions using the testing set
+y_pred = linreg.predict(x_test)
+y=linreg.predict(np.array([275,55.7,80.6]).reshape(1,-1))         #Prediction
+print("\nPredicted Value for the SALES for given instance: ", y)
+
+#Accuracy Score
+print("\nAccuracy Score: ", linreg.score(x_test,y_test))
+predictions = linreg.predict(x_test)
+print('Mean Squared Error :', metrics.mean_squared_error(y_test,predictions))
+print('Root Mean Squared Error:', np.sqrt(metrics.mean_squared_error(y_test,predictions)))
+
+
+--------------------------------------------------------------------------------------------------------------------
+14.Implement a classification/ logistic regression problem. For example, based on different features of “diabetes” data, classify, whether a woman is diabetic or not.
+import pandas as pd
+# split X and y into training and testing sets
+from sklearn.model_selection import train_test_split
+# import the class
+from sklearn.linear_model import LogisticRegression
+from sklearn import metrics
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+%matplotlib inline
+
+col_names = ['pregnant', 'glucose', 'bp', 'skin', 'insulin', 'bmi', 'pedigree', 'age', 'label']
+# load dataset
+pima = pd.read_csv("diabetes.csv", header= None, names=col_names)
+pima.head()
+*************************************************************************************
+#split dataset in features and target variable
+feature_cols = ['pregnant', 'insulin', 'bmi', 'age','glucose','bp','pedigree']
+x = pima[feature_cols] # Features
+y = pima.label # Target variable
+
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.25,random_state=0)
+print(x_train)
+
+logreg = LogisticRegression()
+logreg.fit(x_train,y_train)
+y_pred=logreg.predict(x_test)
+
+print("\ny_pred: ", y_pred)
+
+#Accuracy Score
+print("\nAccuracy Score: ", logreg.score(x_test,y_test))
+mse = metrics.mean_squared_error(y_test, logreg.predict(x_test))
+#Mean Square Error
+print("\nMean Squared Error: ",mse)
+#Root Mean Square Error
+print("\nRoot Mean Squared Error: ",np.sqrt(mse))
+************************************************************************************
+cnf_matrix = metrics.confusion_matrix(y_test, y_pred)
+print("CONFUSION MATRIX:\n", cnf_matrix)
+
+metrics.plot_confusion_matrix(logreg, x_test, y_test,  cmap=plt.cm.Blues)  
+plt.show()
+***********************************************************************************
+print("Accuracy:",metrics.accuracy_score(y_test, y_pred))
+print("Precision:",metrics.precision_score(y_test, y_pred))
+print("Recall:",metrics.recall_score(y_test, y_pred))
+print("f1-Score:",metrics.f1_score(y_test,y_pred))
+
+
+------------------------------------------------------------------------------------------------------------------
+15.Use some function for regularization of “BOSTON” dataset available in ‘sklearn library’.
+from sklearn.datasets import load_boston
+import pandas as pd
+# split X and y into training and testing sets
+from sklearn.model_selection import train_test_split
+# import the class
+from sklearn.linear_model import RidgeCV, LassoCV
+from sklearn import metrics
+import numpy as np
+
+boston_dataset = load_boston()
+boston = pd.DataFrame(boston_dataset.data, columns=boston_dataset.feature_names)
+
+boston['MEDV'] = boston_dataset.target
+boston.head()
+
+x = boston.drop(['MEDV'], axis=1)
+y = boston['MEDV']
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.25,random_state=0)
+
+alpha_range=[0.00001, 0.01, 0.05, 0.1, 0.5, 1, 1.5, 3, 5, 6, 7, 8, 9, 10]
+ridgecv=RidgeCV(alphas=alpha_range, normalize=True, scoring='neg_mean_squared_error')
+ridgecv.fit(x_train,y_train)
+
+print("\nAlpha Range: ", alpha_range)
+print("\nAlpha Value: ", ridgecv.alpha_)
+print("\nCoefficient: ", ridgecv.coef_)
+*****************************************************************
+y_pred=ridgecv.predict(x_test)
+
+print("\nAccuracy Score: ", ridgecv.score(x_test,y_test))
+print("\nMean Absolute Error: ", metrics.mean_absolute_error(y_test,y_pred))
+print("\nMean Squared Score: ", metrics.mean_squared_error(y_test,y_pred))
+print("\nRoot Mean Squared Error ", np.sqrt(metrics.mean_squared_error(y_test,y_pred)))
+******************************************************************
+#Lasso
+lambda_values = [0.000001, 0.0001, 0.001, 0.005, 0.01, 0.05,  0.1, 0.2, 0.3, 0.4, 0.5]
+lassocv=LassoCV(alphas=alpha_range, normalize=True)
+lassocv.fit(x_train,y_train)
+
+print("\nAlpha Range: ", lambda_values)
+print("\nAlpha Value: ", lassocv.alpha_)
+print("\nCoefficient: ", lassocv.coef_)
+*****************************************************************
+y_pred=lassocv.predict(x_test)
+
+print("\nAccuracy Score ", lassocv.score(x_test,y_test))
+print("\nMean Absolute Error: ", metrics.mean_absolute_error(y_test,y_pred))
+print("\nMean Squared Score: ", metrics.mean_squared_error(y_test,y_pred))
+print("\nRoot Mean Squared Error ", np.sqrt(metrics.mean_squared_error(y_test,y_pred)))
+
+
+----------------------------------------------------------------------------------------------------------------
+16.Use some function for neural networks, like Stochastic Gradient Descent or backpropagation - algorithm to predict the value of a variable based on the dataset of problem 14.
+import pandas as pd
+# split X and y into training and testing sets
+from sklearn.model_selection import train_test_split
+# import the class
+from sklearn.neural_network import MLPClassifier
+from sklearn.metrics import plot_confusion_matrix
+from sklearn import metrics
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+%matplotlib inline
+
+col_names = ['pregnant', 'glucose', 'bp', 'skin', 'insulin', 'bmi', 'pedigree', 'age', 'label']
+# load dataset
+pima = pd.read_csv("diabetes.csv", header= None, names=col_names)
+
+#split dataset in features and target variable
+feature_cols = ['pregnant', 'insulin', 'bmi', 'age','glucose','bp','pedigree']
+x = pima[feature_cols] # Features
+y = pima.label # Target variable
+
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.25,random_state=0)
+
+# Create model object
+mlp = MLPClassifier(hidden_layer_sizes=(10,10,10),
+                    random_state=5,
+                    verbose=True,
+                    solver='sgd',
+                    learning_rate_init=0.001)
+
+# Fit data onto the model
+mlp.fit(x_train,y_train)
+# Make prediction on test dataset
+y_pred=mlp.predict(x_test)
+**************************************************************************
+cnf_matrix = metrics.confusion_matrix(y_test, y_pred)
+print("CONFUSION MATRIX:\n", cnf_matrix)
+
+plot_confusion_matrix(mlp, x_test, y_test,  cmap=plt.cm.Blues)  plt.show()
+************************************************************************
+print("Accuracy:",metrics.accuracy_score(y_test, y_pred))
+print("Precision:",metrics.precision_score(y_test, y_pred))
+print("Recall:",metrics.recall_score(y_test, y_pred))
+print("f1-Score:",metrics.f1_score(y_test,y_pred))
+
+
+-----------------------------------------------------------------------------------------------------------------
+17.Implement Simple Linear Regression on “Advertising” dataset using Analytical Method.
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def estimate_coef(x, y):
+    # number of observations/points
+    n = np.size(x)
+    
+    # mean of x and y vector
+    m_x = np.mean(x)
+    m_y = np.mean(y)
+    
+    # calculating cross-deviation and deviation about x
+    SS_xy = np.sum(y*x) - n*m_y*m_x
+    SS_xx = np.sum(x*x) - n*m_x*m_x
+    
+    # calculating regression coefficients
+    b_1 = SS_xy / SS_xx
+    b_0 = m_y - b_1*m_x
+    
+    return (b_0, b_1)
+
+# observations / data
+adv = pd.read_csv("Advertising.csv")
+print(adv.head())  
+x = adv['TV']
+y = adv['sales']
+# estimating coefficients
+b = estimate_coef(x, y)
+print("\nEstimated coefficients:\nb_0(Intercept) = {} \
+    \nb_1(Coefficient) = {}".format(b[0], b[1]))
+***********************************************************************
+y_pred = b[0] + b[1]*x
+
+y_bar=np.mean(y)
+ssr=np.sum((y-y_pred)*(y-y_pred))
+sst=np.sum((y-y_bar)*(y-y_bar))
+acc=1-(ssr/sst)
+print("Accuracy Score: ", acc)
+
+var=np.mean(y-y_pred)
+MSE=var*var
+print("Mean Squared Error: ", MSE)
+print("Root Mean Squared Error: ", np.sqrt(MSE))
+***********************************************************************
+#Plot Regression Line
+    
+# plotting the actual points as scatter plot
+plt.scatter(x, y, color = "r", s = 30)
+    
+# predicted response vector
+y_pred = b[0] + b[1]*x
+    
+# plotting the regression line
+plt.plot(x, y_pred, color = "black")
+    
+# putting labels
+plt.xlabel('TV')
+plt.ylabel('Sales')
+    
+# function to show plot
+plt.show()
+
+
+
+--------------------------------------------------------------------------------------------------------------------
+18.Implement Multiple Linear Regression on “Advertising” dataset using Normal Equation Method.
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+adv = pd.read_csv("Advertising.csv")
+print(adv.head())
+x1=adv['TV']
+x2=adv['radio']
+x3=adv['newspaper']
+y=adv['sales']
+**************************************************
+x1=np.array(x1)
+x2=np.array(x2)
+x3=np.array(x3)
+y=np.array(y)
+
+n=len(x1)
+
+x_bias=np.ones((n,1))
+x1_n=np.reshape(x1,(n,1))
+x2_n=np.reshape(x2,(n,1))
+x3_n=np.reshape(x3,(n,1))
+
+x=np.append(x_bias,x1_n,axis=1)
+x=np.append(x,x2_n,axis=1)
+x=np.append(x,x3_n,axis=1)
+print('X= \n', x) 
+*************************************************
+x_trans=np.transpose(x)
+x_trans_dot_x=x_trans.dot(x)
+temp1=np.linalg.inv(x_trans_dot_x)
+temp2=x_trans.dot(y)
+
+theta=temp1.dot(temp2)
+
+b0=theta[0]
+b1=theta[1]
+b2=theta[2]
+b3=theta[3]
+
+print("\nbeta0: ",b0)
+print("\nbeta1: ",b1)
+print("\nbeta2: ",b2)
+print("\nbeta3: ",b3)
+*************************************************
+y_pred=b0+x1*b1+x2*b2+x3*b3
+y_bar=np.mean(y)
+ssr=np.sum((y-y_pred)*(y-y_pred))
+sst=np.sum((y-y_bar)*(y-y_bar))
+acc=1-(ssr/sst)
+print("Accuracy Score: ", acc)
+
+var=np.mean(y-y_pred)
+MSE=var*var
+print("Mean Squared Error: ", MSE)
+print("Root Mean Squared Error: ", np.sqrt(MSE))
