@@ -1,0 +1,280 @@
+LOGISTIC REGRESSION:::::::::::::::::::::::::::
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+%matplotlib inline
+
+
+
+def calc_sigmoid(z):
+    p=1/(1+ np.exp(-z))
+    p=np.minimum(p, 0.9999)
+    p = np.maximum(p, 0.0001)
+    return p
+
+
+def calc_cost(y_pred,Y_m ,X_m):
+    len_label=len(X_m)
+    cost= (-Y_m*np.log(y_pred) - (1-Y_m)*np.log(1-y_pred)).sum()/len_label
+    return cost
+
+
+def train(Y_m,y_pred,X_m,alpha, theta_m, iterations):
+    list_cost=[]
+    for i in range(iterations):
+        if i%100==0:
+            print("n iteration",i)
+            print("y_label:",y_pred)
+            print("theta:",theta_m)
+        cost=calc_cost(y_pred, Y_m)
+        list_cost.append(cost)
+    print("final cost list: ",list_cost)
+    return list_cost
+***************************************************
+	X = np.array([(2.7,2.5),(3,3),(5.9,2.2),(7.7,3.5)]).reshape(4,2)
+            Xm = np.array(X)
+            print("Xm----->")
+            print(Xm)
+            X0 = np.ones((len(X),1))
+            print("X_m------>")
+            X_m = np.hstack((X0,Xm))
+            print(np.shape(X_m))
+            print("Our Explanatory variable matrix is")
+            print(X_m)
+            Y_m = np.array([0,0,1,1]).reshape(4,1)
+            print("The vector matrix of actual value of dependent variable is", Y_m)
+            # By default the Coefficients are given as 0 and bieas =1
+            # Given Coefficients
+            theta= np.array([1,0,0]).reshape(3,1)
+            print("Initial Coefficients",theta)
+            Xm_transpose = X_m.transpose()
+            print("Transpose of our dataset matrix is ", Xm_transpose)
+
+            # Multiplication of X_m and Coefficient matrix ie. (X_m)*theta_m
+            X_mul1 = np.dot(X_m,theta)
+              
+            # Sigmoid function i.e g(Z)=sigmoid(theta0_m*X0 + theta1_m*X1 +....thetan_m*Xn)
+            z1 = np.empty(len(X_mul1)) 
+            for k in range(len(X_mul1)):
+                z  = X_mul1[k]
+                z1[k] = calc_sigmoid(z)
+            print("Our Sigmoid Vector Matrix is as follows:-->")
+            sigmoid_G_X0 = np.array(z1).reshape(np.shape(z1))
+            print(sigmoid_G_X0)
+            print(len(sigmoid_G_X0))
+            # Our y_predicted matrix is equal to the sigmoid function
+            y_pred = sigmoid_G_X0
+            print("Thus, our Y predicted matrix is as follows:", y_pred)
+            
+    
+            # Error matrix is as follows:
+            err = np.subtract(y_pred,Y_m)
+            print("The error matrix is as follows:" ,err)
+                        # Our Final Multiplied Matrix is as follows:
+            X_mul2 = np.dot(Xm_transpose,err)
+            print("Our Second multiplied matrix is as follows: ",X_mul2)
+           
+            # Learning rate or alpha : given 0.01 or enter as per your choice
+            a = float(input("Enter the learning rate of the expression: "))
+            m = len(X_m)
+            alpha = a/m
+            theta_m = theta - np.dot(alpha,X_mul2).reshape(np.shape(X_mul2))
+            print("Thus our final coeffiecient matrix after this iteration is: ",theta_m)
+            print("=====================================================================")
+            print("The Cost of this logistic regression is as follows:",calc_cost(y_pred,Y_m,X_m))
+
+
+
+
+STANDARDIZATION:::::::::::::::::::::::::::::::::::::::
+1.
+from sklearn.datasets import load_iris
+from sklearn.preprocessing import StandardScaler
+ 
+data = load_iris()
+scale= StandardScaler()
+ 
+# separate the independent and dependent variables
+X_data = data.data
+target = data.target
+ 
+# standardization of dependent variables
+scaled_data = scale.fit_transform(X_data) 
+print(scaled_data)
+
+2.
+from sklearn import preprocessing
+from sklearn.datasets import load_iris
+data = load_iris()
+ 
+# separate the independent and dependent variables
+X_data = data.data
+target = data.target
+ 
+# standardization of dependent variables
+standard = preprocessing.scale(X_data)
+print(standard)
+
+
+
+https://www.analyticsvidhya.com/blog/2020/04/feature-scaling-machine-learning-normalization-standardization/#The_Big_Question_-_Normalize_or_Standardize?
+https://www.askpython.com/python/examples/standardize-data-in-python
+
+
+---------------------------------------------------------------------------------------------------
+METRICS (Accuracy vagerh)
+# demonstration of calculating metrics for a neural network model using sklearn
+from sklearn.datasets import make_circles
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import precision_score
+from sklearn.metrics import recall_score
+from sklearn.metrics import f1_score
+from sklearn.metrics import cohen_kappa_score
+from sklearn.metrics import roc_auc_score
+from sklearn.metrics import confusion_matrix
+from keras.models import Sequential
+from keras.layers import Dense
+
+# generate and prepare the dataset
+def get_data():
+	# generate dataset
+	X, y = make_circles(n_samples=1000, noise=0.1, random_state=1)
+	# split into train and test
+	n_test = 500
+	trainX, testX = X[:n_test, :], X[n_test:, :]
+	trainy, testy = y[:n_test], y[n_test:]
+	return trainX, trainy, testX, testy
+
+# define and fit the model
+def get_model(trainX, trainy):
+	# define model
+	model = Sequential()
+	model.add(Dense(100, input_shape=(2,), activation='relu'))
+	model.add(Dense(1, activation='sigmoid'))
+	# compile model
+	model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+	# fit model
+	model.fit(trainX, trainy, epochs=300, verbose=0)
+	return model
+
+# generate data
+trainX, trainy, testX, testy = get_data()
+# fit model
+model = get_model(trainX, trainy)
+
+
+# predict probabilities for test set
+yhat_probs = model.predict(testX, verbose=0)
+# predict crisp classes for test set
+yhat_classes = model.predict_classes(testX, verbose=0)
+# reduce to 1d array
+yhat_probs = yhat_probs[:, 0]
+yhat_classes = yhat_classes[:, 0]
+
+# accuracy: (tp + tn) / (p + n)
+accuracy = accuracy_score(testy, yhat_classes)
+print('Accuracy: %f' % accuracy)
+# precision tp / (tp + fp)
+precision = precision_score(testy, yhat_classes)
+print('Precision: %f' % precision)
+# recall: tp / (tp + fn)
+recall = recall_score(testy, yhat_classes)
+print('Recall: %f' % recall)
+# f1: 2 tp / (2 tp + fp + fn)
+f1 = f1_score(testy, yhat_classes)
+print('F1 score: %f' % f1)
+
+# kappa
+kappa = cohen_kappa_score(testy, yhat_classes)
+print('Cohens kappa: %f' % kappa)
+# ROC AUC
+auc = roc_auc_score(testy, yhat_probs)
+print('ROC AUC: %f' % auc)
+# confusion matrix
+matrix = confusion_matrix(testy, yhat_classes)
+print(matrix)
+
+CONFUSION MATRIX
+# Importing the dependancies
+from sklearn import metrics
+# Predicted values
+y_pred = ["a", "b", "c", "a", "b"]
+# Actual values
+y_act = ["a", "b", "c", "c", "a"]
+# Printing the confusion matrix
+# The columns will show the instances predicted for each label,
+# and the rows will show the actual number of instances for each label.
+print(metrics.confusion_matrix(y_act, y_pred, labels=["a", "b", "c"]))
+# Printing the precision and recall, among other metrics
+print(metrics.classification_report(y_act, y_pred, labels=["a", 
+"b","c"]))
+
+
+
+
+------------------------------------------------------------------------------------------------------
+
+NORMAL EQUATION METHOD::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+# import required modules
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.datasets import make_regression
+  
+# Create data set.
+x, y = make_regression(n_samples=100, n_features=1,
+                       n_informative=1, noise=10, random_state=10)
+  
+# Plot the generated data set.
+plt.scatter(x, y, s=30, marker='o')
+plt.xlabel("Feature_1 --->")
+plt.ylabel("Target_Variable --->")
+plt.title('Simple Linear Regression')
+plt.show()
+  
+# Convert  target variable array from 1d to 2d.
+y = y.reshape(100, 1)
+****************************************************
+# code
+  
+# Adding x0=1 to each instance
+x_new = np.array([np.ones(len(x)), x.flatten()]).T
+  
+# Using Normal Equation.
+theta_best_values = np.linalg.inv(x_new.T.dot(x_new)).dot(x_new.T).dot(y)
+  
+# Display best values obtained.
+print(theta_best_values)
+***************************************************
+#trying to predict new values
+# sample data instance.
+x_sample = np.array([[-2], [4]])
+  
+# Adding x0=1 to each instance.
+x_sample_new = np.array([np.ones(len(x_sample)), x_sample.flatten()]).T
+  
+# Display the sample.
+print("Before adding x0:\n", x_sample)
+print("After adding x0:\n", x_sample_new)
+***************************************************
+predict_value=x_sample_new.dot(theta_best_values)
+print(predict_value)
+***************************************************
+# Plot the output.
+plt.scatter(x,y,s=30,marker='o')
+plt.plot(x_sample,predict_value,c='red')
+plt.plot()
+plt.xlabel("Feature_1 --->")
+plt.ylabel("Target_Variable --->")
+plt.title('Simple Linear Regression')
+plt.show()
+**************************************************
+# Verification.
+from sklearn.linear_model import LinearRegression
+lr=LinearRegression()    #Object.
+lr.fit(x,y)              #fit method.
+  
+#Print obtained theta values
+print("Best value of theta:",lr.intercept_,lr.coef_,sep='\n')
+  
+#predict.
+print("predicted value:",lr.predict(x_sample),sep='\n')
